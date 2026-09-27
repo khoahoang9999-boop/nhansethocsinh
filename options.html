@@ -1,0 +1,733 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cấu hình Trợ lý Nhận xét Edu Pro</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      *, body, input, select, textarea, button, table, th, td, div, span, p, h1, h2, h3, h4, h5, h6, label {
+        font-family: 'Times New Roman', Times, 'Cambria', Georgia, serif !important;
+      }
+      body {
+        margin: 0;
+      }
+      svg {
+        box-sizing: border-box;
+      }
+      /* Button bounce feedback */
+      button { transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s ease, opacity 0.2s; cursor: pointer; }
+      button:active { transform: scale(0.95); }
+    </style>
+  </head>
+  <body class="bg-[#F8FAFC] flex text-slate-800 min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-72 bg-slate-900 text-white flex flex-col fixed h-full z-10">
+      <div class="p-6 border-b border-slate-800 flex flex-col items-center justify-center gap-2 text-center">
+        <div class="flex items-center justify-center gap-3">
+          <!-- Unified Logo -->
+          <div class="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center shadow-md relative overflow-hidden shrink-0 mr-1">
+            <span class="text-white text-xl font-black">K</span>
+          </div>
+          <h1
+            class="text-[17px] font-bold tracking-wide bg-gradient-to-b from-yellow-50 to-yellow-300 bg-clip-text text-transparent"
+          >
+            Trợ lý Nhận xét Edu Pro
+          </h1>
+        </div>
+      </div>
+      <nav class="flex-1 p-3 flex flex-col">
+        <div class="mb-3">
+          <div class="px-4 py-1 text-[11px] font-bold text-red-500 uppercase tracking-wider">
+            Nền tảng (Platform)
+          </div>
+          <div class="px-4 space-y-1.5 mt-1">
+            <label class="flex items-center space-x-2.5 cursor-pointer group">
+              <input type="radio" name="configPlatform" value="csdl" checked class="w-3.5 h-3.5 text-red-600 bg-slate-800 border-slate-600 focus:ring-red-500 focus:ring-offset-slate-900">
+              <span class="text-[13px] font-medium text-slate-300 group-hover:text-white transition-colors">CSDL Ngành</span>
+            </label>
+            <label class="flex items-center space-x-2.5 cursor-pointer group">
+              <input type="radio" name="configPlatform" value="vnedu" class="w-3.5 h-3.5 text-red-600 bg-slate-800 border-slate-600 focus:ring-red-500 focus:ring-offset-slate-900">
+              <span class="text-[13px] font-medium text-slate-300 group-hover:text-white transition-colors">VnEdu</span>
+            </label>
+            <label class="flex items-center space-x-2.5 cursor-pointer group">
+              <input type="radio" name="configPlatform" value="smas" class="w-3.5 h-3.5 text-orange-600 bg-slate-800 border-slate-600 focus:ring-orange-500 focus:ring-offset-slate-900">
+              <span class="text-[13px] font-medium text-slate-300 group-hover:text-white transition-colors">Smas</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="csdl-nav-sections" class="space-y-0.5">
+          <div class="px-4 mb-3">
+            <label class="text-[10px] font-bold text-red-500 uppercase tracking-wider mb-1 block">Cấp học</label>
+            <select
+              id="filterCapHoc"
+              class="w-full p-1.5 bg-slate-800 border border-slate-700 rounded-md text-[13px] text-white outline-none focus:border-red-500 transition-colors font-medium"
+            >
+              <option value="TH">Tiểu học</option>
+              <option value="THCS" selected>THCS</option>
+              <option value="THPT">THPT</option>
+            </select>
+          </div>
+
+          <div
+            class="px-4 py-1 text-[11px] font-bold text-red-500 uppercase tracking-wider"
+          >
+            Lời phê mẫu
+          </div>
+
+          <button
+            id="tab-gvbm"
+            data-role="GVBM"
+            class="tab-btn w-full text-left flex items-center gap-3 px-4 py-1.5 bg-green-500/20 text-white border border-green-500/30 backdrop-blur-md shadow-sm rounded-md text-[13px] font-semibold transition-colors cursor-pointer"
+          >
+            Nhận xét môn học (HK)
+          </button>
+          <button
+            id="tab-th-nlpc"
+            data-role="TH_NLPC"
+            class="tab-btn w-full text-left flex items-center gap-3 px-4 py-1.5 rounded-md text-[13px] font-medium text-slate-300 border border-transparent hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+            style="display: none;"
+          >
+            ĐGĐK NL & PC (5.3.2)
+          </button>
+          <button
+            id="tab-hb-gvbm"
+            data-role="HOC_BA_GVBM"
+            class="tab-btn w-full text-left flex items-center gap-3 px-4 py-1.5 rounded-md text-[13px] font-medium text-slate-300 border border-transparent hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+          >
+            Học bạ (GVBM)
+          </button>
+          <button
+            id="tab-hb-gvcn"
+            data-role="HOC_BA_GVCN"
+            class="tab-btn w-full text-left flex items-center gap-3 px-4 py-1.5 rounded-md text-[13px] font-medium text-slate-300 border border-transparent hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+          >
+            Học bạ (GVCN)
+          </button>
+          <button
+            id="tab-vnedu-nlpc-hb"
+            data-role="VNEDU_NLPC_HB"
+            class="tab-btn w-full text-left flex items-center gap-3 px-4 py-1.5 rounded-md text-[13px] font-medium text-slate-300 border border-transparent hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+            style="display: none;"
+          >
+            Học bạ NLPC (VnEdu TH)
+          </button>
+          <button
+            id="tab-dgtx"
+            data-role="DGTX"
+            class="tab-btn w-full text-left flex items-center gap-3 px-4 py-1.5 rounded-md text-[13px] font-medium text-slate-300 border border-transparent hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+          >
+            ĐGTX (Theo tháng)
+          </button>
+          <button
+            id="tab-hieu-truong"
+            data-role="HIEU_TRUONG"
+            class="tab-btn w-full text-left flex items-center gap-3 px-4 py-1.5 rounded-md text-[13px] font-medium text-slate-300 border border-transparent hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+          >
+            Phê duyệt Hiệu trưởng
+          </button>
+
+          <button
+            id="tab-backup"
+            data-role="BACKUP_RESTORE"
+            class="tab-btn w-full text-left flex items-center justify-between px-4 py-2 rounded-md text-[13px] font-semibold text-emerald-300 border border-emerald-500/30 hover:text-white hover:bg-emerald-500/20 transition-colors cursor-pointer bg-emerald-500/10 mt-2"
+          >
+            <span class="flex items-center gap-2">
+              <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
+              Sao lưu & Phục hồi mẫu
+            </span>
+            <span class="text-[9px] bg-emerald-600 text-white font-black px-1.5 py-0.5 rounded-full uppercase">Lưu</span>
+          </button>
+
+          <button
+            id="tab-updates"
+            data-role="UPDATES"
+            class="tab-btn w-full text-left flex items-center justify-between px-4 py-2 rounded-md text-[13px] font-semibold text-amber-300 border border-amber-500/30 hover:text-white hover:bg-amber-500/20 transition-colors cursor-pointer bg-amber-500/10 mt-1"
+          >
+            <span class="flex items-center gap-2">
+              <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Cập nhật tiện ích
+            </span>
+            <span id="options-sidebar-badge" class="text-[9px] bg-red-600 text-white font-black px-1.5 py-0.5 rounded-full uppercase">Mới</span>
+          </button>
+
+          <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700/80 mt-3">
+            <label class="flex items-center justify-between cursor-pointer">
+              <span class="text-xs text-slate-300 font-medium">Hiện nút nổi trên trang</span>
+              <input type="checkbox" id="optionsShowFloatingBarCheckbox" class="w-4 h-4 text-red-600 bg-slate-900 border-slate-700 rounded focus:ring-red-500 cursor-pointer" checked>
+            </label>
+          </div>
+        </div>
+
+        <div class="mt-auto pt-6">
+          <div class="mt-4 pt-4 border-t border-slate-800 flex justify-center">
+            <span id="options-sidebar-version" class="whitespace-nowrap text-[10px] bg-slate-800 text-yellow-400 px-2 py-0.5 rounded font-mono border border-yellow-500/20 shadow-inner leading-none">Version 28.09.2026</span>
+          </div>
+        </div>
+      </nav>
+      <div
+        class="py-1.5 px-2 bg-slate-900/40 backdrop-blur-md border-t border-white/5 text-[10px] leading-tight text-center"
+      >
+        <div class="font-medium tracking-wide bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400 bg-clip-text text-transparent drop-shadow-sm" style="background-size: 200% auto; animation: shine 3s linear infinite;">
+          Tác giả: Hoàng Văn Đình Khoa<br/>
+          SĐT: 0989.982.818 - Zalo: 0978.468.986
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main-content-csdl" class="flex-1 flex flex-col relative ml-72">
+      <header
+        class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-10"
+      >
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-semibold text-red-600" id="main-header-title"
+            >Quản lý Lời phê Mẫu</span
+          >
+        </div>
+        <div class="flex items-center gap-4">
+          <div id="auth-section" class="flex items-center gap-2 mr-4 border-r border-slate-200 pr-4">
+            <button id="loginBtn" class="px-4 py-2 text-sm font-medium bg-indigo-50 text-indigo-600 rounded-md shadow-sm border border-indigo-200 cursor-pointer hover:bg-indigo-100 transition-colors flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+              Đăng nhập / Đăng ký
+            </button>
+            <div id="user-info" class="hidden items-center gap-3">
+              <div class="flex flex-col items-end">
+                <div class="flex items-center gap-1">
+                  <span id="user-credits" class="text-sm font-bold text-indigo-700 bg-indigo-50 px-1.5 rounded-md shadow-inner border border-indigo-100" title="Thời hạn VIP">0 NĂM</span>
+                  <span id="user-points" class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-1.5 rounded-md shadow-inner border border-emerald-100" title="Số lượt dùng">0 LƯỢT</span>
+                </div>
+                <span id="user-email-display" class="text-[10px] text-slate-500 font-medium"></span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="topupBtn" class="px-3 py-1.5 text-xs font-semibold bg-amber-100 text-amber-700 rounded-md shadow-sm hover:bg-amber-200 cursor-pointer transition-colors">Gia hạn</button>
+                <button id="adminBtn" class="hidden px-3 py-1.5 text-xs font-semibold bg-slate-800 text-white rounded-md shadow-sm hover:bg-slate-700 cursor-pointer transition-colors">Admin</button>
+                <button id="logoutBtn" class="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors" title="Đăng xuất">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <button
+            id="exportAllTemplatesBtn"
+            class="px-3.5 py-2 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-md shadow drop-shadow-sm cursor-pointer transition-colors flex items-center gap-1.5 active:scale-95"
+            title="Tải tất cả lời phê mẫu của tất cả các cấp học về máy tính để lưu trữ"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+            <span>Tải mẫu về máy</span>
+          </button>
+          <button
+            id="importAllTemplatesBtn"
+            class="px-3.5 py-2 text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white rounded-md shadow drop-shadow-sm cursor-pointer transition-colors flex items-center gap-1.5 active:scale-95"
+            title="Tải tệp mẫu đã lưu từ máy tính lên lại tiện ích"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l4-4m0 0l4 4m-4-4v12" /></svg>
+            <span>Tải mẫu lên</span>
+          </button>
+          <input type="file" id="backupFileInput" accept=".json,.xlsx,.xls" class="hidden" />
+          <button
+            id="resetConfigBtn"
+            class="px-4 py-2 text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md border border-slate-300 shadow-sm cursor-pointer transition-colors flex items-center gap-1.5"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Khôi phục mặc định
+          </button>
+          <button
+            id="saveConfigBtn"
+            class="px-5 py-2 text-sm font-medium bg-blue-600 text-white rounded-md shadow drop-shadow-sm cursor-pointer hover:bg-blue-700 transition-colors flex items-center gap-2"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
+              ></path>
+            </svg>
+            Lưu Cấu Hình
+          </button>
+        </div>
+      </header>
+
+      <!-- Global Update Alert Banner in Options -->
+      <div id="options-top-update-banner" class="hidden mx-8 mt-6 p-4 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white rounded-2xl shadow-lg border border-amber-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-start gap-3">
+          <div class="p-2 bg-white/20 rounded-xl shrink-0 mt-0.5">
+            <svg class="w-6 h-6 text-yellow-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <div class="font-black text-base flex items-center gap-2">
+              <span>Đã có phiên bản cập nhật mới!</span>
+              <span id="banner-version-tag" class="text-xs bg-black/30 text-amber-200 px-2 py-0.5 rounded-full font-mono font-bold">v28.09.2026</span>
+            </div>
+            <p id="banner-version-desc" class="text-xs text-amber-50 mt-1 leading-relaxed">Cập nhật và cải tiến tính năng tiện ích.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button id="banner-download-btn" class="bg-white text-orange-800 hover:bg-amber-50 font-black px-4 py-2 rounded-xl text-xs shadow-md transition-all active:scale-95 cursor-pointer flex items-center gap-2 whitespace-nowrap">
+            <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Tải bản cập nhật (.zip)
+          </button>
+        </div>
+      </div>
+
+      <!-- Updates Management View Section -->
+      <div id="updates-view-container" class="hidden p-8 flex flex-col gap-6 w-full max-w-5xl mx-auto">
+        <!-- Status & Download Box -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+            <div>
+              <div class="flex items-center gap-2.5">
+                <h3 class="text-lg font-black text-slate-800">Trạng thái Cập nhật Tiện ích</h3>
+                <span id="update-status-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-sm flex items-center gap-1.5 transition-all">
+                  <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span>Phiên bản v28.09.2026 (Mới nhất)</span>
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">Hệ thống luôn sẵn sàng cung cấp các bản cập nhật mới nhất cho giáo viên.</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button id="check-update-again-btn" class="px-3.5 py-2 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 active:scale-95 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer">
+                <svg id="check-update-icon" class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <svg id="check-update-spinner" class="hidden animate-spin w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <span id="check-update-btn-label">Kiểm tra cập nhật</span>
+              </button>
+              <button id="full-download-update-btn" class="px-5 py-2.5 text-xs font-black text-white bg-blue-600 hover:bg-blue-700 active:scale-95 rounded-xl shadow-md shadow-blue-200 transition-all flex items-center gap-2 cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                TẢI BẢN CẬP NHẬT MỚI NHẤT (.ZIP)
+              </button>
+            </div>
+          </div>
+
+          <!-- Version Comparison Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80">
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Phiên bản đang cài đặt</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span id="current-installed-version" class="text-xl font-black text-slate-700 font-mono">v28.09.2026</span>
+                <span class="text-[11px] text-slate-400 font-medium">Bản cục bộ</span>
+              </div>
+            </div>
+            <div class="p-4 bg-blue-50/60 rounded-xl border border-blue-100">
+              <span class="text-[10px] font-bold text-blue-500 uppercase tracking-wider block">Phiên bản máy chủ mới nhất</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span id="latest-server-version" class="text-xl font-black text-blue-700 font-mono">v28.09.2026</span>
+                <span id="latest-release-date" class="text-[11px] text-blue-500 font-medium">Mới phát hành</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Changelog -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <h4 class="text-sm font-black text-slate-800 flex items-center gap-2 uppercase tracking-wide">
+            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Nội dung cập nhật & Nhật ký phiên bản
+          </h4>
+          <div id="update-changelog-content" class="mt-3 p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed font-sans whitespace-pre-line">
+            - Cập nhật và tối ưu hóa hệ thống tiện ích.
+            - Nâng cấp độ ổn định và cải thiện trải nghiệm người dùng.
+          </div>
+        </div>
+
+        <!-- Instructions Guide -->
+        <div class="bg-gradient-to-br from-slate-900 to-blue-950 p-6 rounded-2xl text-white shadow-md">
+          <h4 class="text-sm font-black text-yellow-300 flex items-center gap-2 uppercase tracking-wide mb-4">
+            <svg class="w-4 h-4 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Hướng dẫn cập nhật tiện ích 3 bước (Không mất dữ liệu)
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div class="bg-white/10 p-4 rounded-xl border border-white/10 flex flex-col gap-2">
+              <div class="w-6 h-6 rounded-full bg-yellow-400 text-slate-900 font-black flex items-center justify-center text-xs">1</div>
+              <strong class="text-white">Tải file cập nhật</strong>
+              <p class="text-slate-300 leading-relaxed">Bấm nút "Tải bản cập nhật mới nhất (.zip)" ở trên để tải file <code class="bg-black/30 px-1 py-0.5 rounded font-mono text-yellow-200">nhan-xet-diem-v3.zip</code> về máy tính của thầy/cô.</p>
+            </div>
+            <div class="bg-white/10 p-4 rounded-xl border border-white/10 flex flex-col gap-2">
+              <div class="w-6 h-6 rounded-full bg-yellow-400 text-slate-900 font-black flex items-center justify-center text-xs">2</div>
+              <strong class="text-white">Giải nén ghi đè</strong>
+              <p class="text-slate-300 leading-relaxed">Giải nén file zip vào đúng thư mục tiện ích đã cài trước đây (hoặc giải nén ra một thư mục mới tùy ý).</p>
+            </div>
+            <div class="bg-white/10 p-4 rounded-xl border border-white/10 flex flex-col gap-2">
+              <div class="w-6 h-6 rounded-full bg-yellow-400 text-slate-900 font-black flex items-center justify-center text-xs">3</div>
+              <strong class="text-white">Bấm Tải lại (Reload)</strong>
+              <p class="text-slate-300 leading-relaxed">Mở tab <code class="bg-black/30 px-1 py-0.5 rounded font-mono text-yellow-200">chrome://extensions</code> trên Chrome, tìm tiện ích "Trợ lý Nhận xét Edu Pro" và bấm nút biểu tượng 🔄 <strong>Tải lại</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Backup & Restore Management View Section -->
+      <div id="backup-view-container" class="hidden p-8 flex flex-col gap-6 w-full max-w-5xl mx-auto">
+        <!-- Title and Introduction Header Card -->
+        <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-700 text-white p-6 rounded-2xl shadow-md">
+          <div class="flex items-center gap-3">
+            <div class="p-3 bg-white/20 backdrop-blur-md rounded-xl shrink-0">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-xl font-black tracking-tight">Trung tâm Sao lưu & Phục hồi Lời phê Mẫu</h2>
+              <p class="text-xs text-emerald-100 mt-1 max-w-2xl leading-relaxed">
+                Tải toàn bộ lời phê mẫu của tất cả các cấp học về máy tính để lưu trữ an toàn. Khi tiện ích cập nhật phiên bản mới hoặc đổi máy tính, bạn chỉ cần nạp lại tệp này để lấy lại trọn vẹn 100% mẫu đã chỉnh sửa mà không tốn công cài đặt lại.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-time Stats Breakdown Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Cấp Tiểu học</span>
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+            </div>
+            <div class="mt-3">
+              <span id="stat-count-th" class="text-2xl font-black text-slate-800">0</span>
+              <span class="text-xs text-slate-500 ml-1">lời phê</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Khối 1 - 5 (Môn, ĐGTX, NL&PC, Học bạ)</p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Cấp THCS</span>
+              <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+            </div>
+            <div class="mt-3">
+              <span id="stat-count-thcs" class="text-2xl font-black text-slate-800">0</span>
+              <span class="text-xs text-slate-500 ml-1">lời phê</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Khối 6 - 9 (Môn HK1/HK2/CN, ĐGTX, Sổ ghi)</p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Cấp THPT</span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            </div>
+            <div class="mt-3">
+              <span id="stat-count-thpt" class="text-2xl font-black text-slate-800">0</span>
+              <span class="text-xs text-slate-500 ml-1">lời phê</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Khối 10 - 12 (Môn HK1/HK2/CN, ĐGTX, Học bạ)</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-indigo-50 to-blue-50 p-5 rounded-2xl border border-indigo-100 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-indigo-700 uppercase tracking-wider">Tổng cộng</span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
+            <div class="mt-3">
+              <span id="stat-count-total" class="text-2xl font-black text-indigo-950">0</span>
+              <span class="text-xs text-indigo-700 ml-1">lời phê đang lưu</span>
+            </div>
+            <p class="text-[11px] text-indigo-600 font-medium mt-1">Sẵn sàng để sao lưu dự phòng</p>
+          </div>
+        </div>
+
+        <!-- Action Card 1: Tải tất cả mẫu về máy -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-4">
+          <div class="flex items-start gap-4">
+            <div class="p-3 bg-emerald-100 text-emerald-700 rounded-xl shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-bold text-slate-800">1. Tải tất cả mẫu về máy tính để lưu trữ (Sao lưu)</h3>
+                <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">An toàn</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                Tải về tệp chứa toàn bộ cấu hình lời phê của tất cả các cấp học (Tiểu học, THCS, THPT). Bạn có thể chọn định dạng JSON (chuẩn chính xác 100% để phục hồi sau này) hoặc định dạng Excel để mở xem và in ấn.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 pt-2 border-t border-slate-100">
+            <button
+              id="backupDownloadJsonBtn"
+              class="px-5 py-2.5 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-md shadow-emerald-200 transition-all active:scale-95 cursor-pointer flex items-center gap-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+              <span>Tải file sao lưu (.JSON) - Khuyên dùng</span>
+            </button>
+
+            <button
+              id="backupDownloadExcelBtn"
+              class="px-5 py-2.5 text-xs font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl shadow-sm transition-all active:scale-95 cursor-pointer flex items-center gap-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+              <span>Xuất ra bảng tính Excel (.XLSX)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Action Card 2: Tải mẫu lên tiện ích (Phục hồi) -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-4">
+          <div class="flex items-start gap-4">
+            <div class="p-3 bg-indigo-100 text-indigo-700 rounded-xl shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l4-4m0 0l4 4m-4-4v12" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-bold text-slate-800">2. Tải mẫu lên lại tiện ích (Phục hồi dữ liệu)</h3>
+                <span class="bg-indigo-100 text-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Phục hồi</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                Chọn tệp sao lưu (.json) hoặc tệp Excel (.xlsx) bạn đã tải về trước đây để khôi phục toàn bộ lời phê mẫu vào tiện ích. Tiện ích sẽ kiểm tra tính hợp lệ trước khi nạp.
+              </p>
+            </div>
+          </div>
+
+          <!-- Dropzone area -->
+          <div
+            id="backupDropzone"
+            class="border-2 border-dashed border-slate-200 hover:border-indigo-400 bg-slate-50/70 hover:bg-indigo-50/30 rounded-2xl p-6 text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-2"
+          >
+            <svg class="w-10 h-10 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <div class="text-sm font-bold text-slate-700">Kéo thả tệp sao lưu vào đây hoặc bấm để chọn tệp</div>
+            <div class="text-xs text-slate-500">Hỗ trợ tệp <strong>.json</strong> (sao lưu chuẩn) hoặc tệp <strong>.xlsx</strong> (Excel)</div>
+            <button
+              id="backupSelectFileBtn"
+              type="button"
+              class="mt-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer"
+            >
+              Chọn tệp từ máy tính
+            </button>
+            <div id="backupFileSelectedInfo" class="hidden mt-2 p-3 bg-white border border-indigo-200 rounded-xl text-xs text-indigo-900 font-medium"></div>
+          </div>
+        </div>
+
+        <!-- Action Card 3: Khôi phục mặc định ban đầu -->
+        <div class="bg-rose-50/50 p-6 rounded-2xl border border-rose-200 shadow-sm flex items-center justify-between">
+          <div>
+            <h4 class="text-sm font-bold text-rose-900 flex items-center gap-2">
+              <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+              Khôi phục về mẫu gốc ban đầu (Reset)
+            </h4>
+            <p class="text-xs text-rose-700 mt-0.5">
+              Xóa các chỉnh sửa hiện tại và đưa toàn bộ lời phê mẫu về cấu hình chuẩn ban đầu của tác giả.
+            </p>
+          </div>
+          <button
+            id="backupResetFactoryBtn"
+            class="px-4 py-2 bg-white text-rose-700 border border-rose-300 hover:bg-rose-100 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap"
+          >
+            Khôi phục cài đặt gốc
+          </button>
+        </div>
+      </div>
+        <div class="w-full space-y-6">
+          <!-- Filters -->
+          <div
+            class="flex flex-wrap gap-4 mb-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"
+          >
+
+            <div class="flex-1 min-w-[150px]">
+              <label
+                class="text-[10px] font-bold text-red-500 uppercase tracking-wider mb-1 block"
+                >Khối lớp</label
+              >
+              <select
+                id="filterKhoiLop"
+                class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 transition-colors font-medium"
+              >
+                <!-- Dynamic -->
+              </select>
+            </div>
+            <div class="flex-1 min-w-[200px]" id="filterMonHocContainer">
+              <label
+                class="text-[10px] font-bold text-red-500 uppercase tracking-wider mb-1 block"
+                >Môn học</label
+              >
+              <select
+                id="filterMonHoc"
+                class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 transition-colors font-medium"
+              >
+                <!-- Dynamic -->
+              </select>
+            </div>
+            
+            <div class="flex-1 min-w-[200px]" id="filterHocKyContainer" style="display: none">
+              <label
+                class="text-[10px] font-bold text-red-500 uppercase tracking-wider mb-1 block"
+                >Học kỳ / Giai đoạn</label
+              >
+              <select
+                id="filterHocKy"
+                class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 transition-colors font-medium"
+              >
+                <!-- Dynamic based on cap hoc -->
+              </select>
+            </div>
+            
+            <div class="flex-1 min-w-[200px]" id="filterTieuChiContainer" style="display: none">
+              <label
+                class="text-[10px] font-bold text-red-500 uppercase tracking-wider mb-1 block"
+                >Tiêu chí (Tiểu học)</label
+              >
+              <select
+                id="filterTieuChi"
+                class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 transition-colors font-medium"
+              >
+                <!-- Dynamic -->
+              </select>
+            </div>
+            <div class="flex-1 min-w-[120px]" id="filterThangContainer" style="display: none">
+              <label class="text-[10px] font-bold text-red-500 uppercase tracking-wider mb-1 block">Tháng</label>
+              <select id="filterThang" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 transition-colors font-medium">
+                <option value="8">Tháng 8</option>
+                <option value="9">Tháng 9</option>
+                <option value="10">Tháng 10</option>
+                <option value="11">Tháng 11</option>
+                <option value="12">Tháng 12</option>
+                <option value="1">Tháng 1</option>
+                <option value="2">Tháng 2</option>
+                <option value="3">Tháng 3</option>
+                <option value="4">Tháng 4</option>
+                <option value="5">Tháng 5</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Alert for Roles -->
+          <div
+            id="roleAlert"
+            class="bg-blue-50/80 border border-blue-100 p-5 rounded-xl text-sm text-blue-900 shadow-sm flex gap-3 items-start"
+            style="display: none"
+          >
+            <svg
+              class="w-5 h-5 text-blue-500 shrink-0 mt-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <div>
+              <p class="font-bold">Nhận xét Cuối năm (Ghi Học bạ):</p>
+              <ul class="list-disc ml-5 mt-2 text-blue-800">
+                <li>
+                  Bạn có thể nhấn Enter để xuống dòng, hệ thống sẽ tự động tách
+                  thành 3 dòng kết quả.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Grid Content -->
+          <div id="configContainer" class="flex flex-col gap-6">
+            <!-- Dynamic rendering here -->
+          </div>
+
+          <!-- CSV Import UI -->
+          <div
+            class="bg-blue-50 border border-blue-100 p-8 rounded-2xl flex items-center justify-between shadow-sm mt-8"
+          >
+            <div class="flex items-center gap-5">
+              <div
+                class="p-3 bg-blue-600 text-white rounded-full shadow-lg shadow-blue-200 shrink-0"
+              >
+                <svg
+                  class="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-blue-950">
+                  Nhập liệu hàng loạt bằng Excel
+                </h3>
+                <p class="text-sm text-blue-700 mt-0.5">
+                  Tải lên tệp .xlsx (Cấu trúc Cột: Cấp Học, Khối Lớp, Vai Trò,
+                  Môn Học, Mức Độ, Điểm Từ, Điểm Đến, Mã NX, Lời Phê)
+                </p>
+                <div class="flex gap-2 items-center mt-3">
+                  <input
+                    type="file"
+                    id="csvFileInput"
+                    accept=".xlsx,.xls"
+                    class="text-xs file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer text-red-600 font-medium"
+                  />
+                  <button
+                    id="downloadTemplateBtn"
+                    class="px-4 py-2 text-xs font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 rounded-md cursor-pointer transition-colors shadow-sm whitespace-nowrap"
+                  >
+                    Tải File Mẫu
+                  </button>
+                </div>
+              </div>
+            </div>
+            <button
+              id="importCsvBtn"
+              class="px-8 py-3 bg-blue-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-blue-200/50 cursor-pointer hover:bg-blue-700 hover:shadow-blue-300 transition-all uppercase tracking-wider"
+            >
+              Tải lên
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Custom Modals -->
+    <div id="custom-modal-overlay" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center">
+      <div id="custom-modal" class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden transform scale-95 opacity-0 transition-all duration-200">
+        <div class="p-6">
+          <h3 id="custom-modal-title" class="text-xl font-bold text-slate-800 tracking-tight mb-2">Xác nhận</h3>
+          <p id="custom-modal-message" class="text-slate-600 text-sm leading-relaxed mb-6"></p>
+          <div class="flex items-center justify-end gap-3">
+            <button id="custom-modal-cancel" class="px-4 py-2 text-sm font-semibold text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors cursor-pointer">Hủy</button>
+            <button id="custom-modal-confirm" class="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer">Đồng ý</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification Alert -->
+    <div id="options-toast" class="hidden fixed bottom-6 right-6 z-50 max-w-md bg-white border border-slate-200 rounded-2xl shadow-2xl p-4 flex items-start gap-3 transition-all duration-300 transform translate-y-2 opacity-0">
+      <div id="options-toast-icon" class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5"></div>
+      <div class="flex-1 min-w-0">
+        <h5 id="options-toast-title" class="text-sm font-bold text-slate-800 leading-snug"></h5>
+        <p id="options-toast-desc" class="text-xs text-slate-600 mt-1 leading-relaxed"></p>
+      </div>
+      <button id="options-toast-close" class="text-slate-400 hover:text-slate-600 p-1 cursor-pointer">✕</button>
+    </div>
+
+    <script type="module" src="/options.js"></script>
+  </body>
+</html>

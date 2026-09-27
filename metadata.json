@@ -1,0 +1,8 @@
+{
+  "name": "Trợ lý nhận xét điểm ngày 21/5/2026",
+  "description": "Tiện ích tối ưu cho VnEdu/Smas/CSDL - Trợ lý nhận xét Edu PRO",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

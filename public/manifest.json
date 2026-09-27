@@ -1,0 +1,106 @@
+{
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4akW0gUKJ8FziG1DFbP4WdSe8LTzpjImBOYM+zQ17Dz4vPi4TXgggQVi/tJnFShbTtabMesvx1kyRj7gwg55Binr94M00XIEXi/Y3jaa4JJy2sTMKi1B4kN8vciZNVfq/uvuPyJhqRQIbxs12WNU5JX7aHkuWE7V2TUZaeJkvAnWiWvtF80JKP0aZUURR3yL4tF1v22Gv2FiJGPa2K3jpdd7HLuYEvx7PxZQxoQIb3a7vzFfmSaq3wdsj4pTJsI/kK+m/16HKz40oKtHxdZhacBbVAu8ZH75y+41GaU5puWceQONQZpmbg8F0ZXRGN7QM+NjLXb6LoJN2ddJDay7nQIDAQAB",
+  "name": "Trợ lý Nhận xét Edu Pro",
+  "version": "28.9.2026",
+  "version_name": "28.09.2026",
+  "description": "Tiện ích mở rộng giúp giáo viên tự động điền nhận xét điểm thường xuyên và học bạ",
+  "permissions": [
+    "storage",
+    "scripting",
+    "unlimitedStorage",
+    "identity",
+    "notifications",
+    "alarms",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "*://csdl.moet.gov.vn/*",
+    "*://*.csdl.moet.gov.vn/*",
+    "*://*.moet.gov.vn/*",
+    "*://vnedu.vn/*",
+    "*://*.vnedu.vn/*",
+    "*://smas.vn/*",
+    "*://*.smas.vn/*",
+    "*://smas.edu.vn/*",
+    "*://*.smas.edu.vn/*",
+    "*://*.viettel.vn/*",
+    "*://*.edu.vn/*",
+    "*://*.vtsmas.vn/*",
+    "*://vtsmas.vn/*",
+    "https://*.run.app/*",
+    "http://localhost:3000/*"
+  ],
+  "icons": {
+    "16": "icon_v3_16.png",
+    "48": "icon_v3_48.png",
+    "128": "icon_v3_128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Mở Trợ lý",
+    "default_icon": {
+      "16": "icon_v3_16.png",
+      "48": "icon_v3_48.png",
+      "128": "icon_v3_128.png"
+    }
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>",
+        "*://csdl.moet.gov.vn/*",
+        "*://*.csdl.moet.gov.vn/*",
+        "*://*.moet.gov.vn/*",
+        "*://vnedu.vn/*",
+        "*://*.vnedu.vn/*",
+        "*://smas.vn/*",
+        "*://*.smas.vn/*",
+        "*://smas.edu.vn/*",
+        "*://*.smas.edu.vn/*",
+        "*://*.viettel.vn/*",
+        "*://*.edu.vn/*",
+        "*://*.vtsmas.vn/*",
+        "*://vtsmas.vn/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "inject.js",
+        "auth-ui.html",
+        "auth-ui.js",
+        "options.html",
+        "options.js",
+        "style.css",
+        "icon_v3_16.png",
+        "icon_v3_48.png",
+        "icon_v3_128.png",
+        "icon16.png",
+        "icon48.png",
+        "icon128.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "oauth2": {
+    "client_id": "87222165808-d8b485v4h22i1mc7c03g7vhga0edj2th.apps.googleusercontent.com",
+    "scopes": [
+      "email",
+      "profile"
+    ]
+  }
+}
